@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 400" width="100%" height="100%">
+  <style>
+    .bg { fill: #fff5f7; }
+    .root-box { fill: #d63384; rx: 8; ry: 8; }
+    .root-text { font-family: 'Segoe UI', Arial, sans-serif; font-weight: bold; font-size: 15px; fill: #ffffff; }
+    .folder-box { fill: #ffccd5; stroke: #d63384; stroke-width: 1.5; rx: 6; ry: 6; }
+    .folder-text { font-family: 'Segoe UI', Arial, sans-serif; font-weight: bold; font-size: 13px; fill: #800f2f; }
+    .file-box { fill: #ffffff; stroke: #ffccd5; stroke-width: 1.5; rx: 6; ry: 6; }
+    .file-text { font-family: 'Segoe UI', Arial, sans-serif; font-size: 13px; fill: #4a4e69; font-weight: 600; }
+    .desc-text { font-family: 'Segoe UI', Arial, sans-serif; font-size: 12px; fill: #d63384; font-style: italic; }
+    .line { stroke: #d63384; stroke-width: 2; }
+  </style>
+
+  <rect width="100%" height="100%" class="bg" />
+
+  <!-- Root Folder -->
+  <rect x="30" y="20" width="220" height="38" class="root-box" />
+  <text x="45" y="44" class="root-text">📁 WINDI_WEB_FLORIST/</text>
+
+  <!-- Main Tree Lines -->
+  <line x1="80" y1="58" x2="80" y2="295" class="line" />
+
+  <!-- Item 1: index.html -->
+  <line x1="80" y1="90" x2="120" y2="90" class="line" />
+  <rect x="120" y="73" width="180" height="32" class="file-box" />
+  <text x="135" y="94" class="file-text">📄 index.html</text>
+  <text x="315" y="94" class="desc-text">(File Utama Website)</text>
+
+  <!-- Item 2: style.css -->
+  <line x1="80" y1="135" x2="120" y2="135" class="line" />
+  <rect x="120" y="118" width="180" height="32" class="file-box" />
+  <text x="135" y="139" class="file-text">🎨 style.css</text>
+  <text x="315" y="139" class="desc-text">(File Tampilan CSS)</text>
+
+  <!-- Item 3: images/ -->
+  <line x1="80" y1="180" x2="120" y2="180" class="line" />
+  <rect x="120" y="163" width="180" height="32" class="folder-box" />
+  <text x="135" y="184" class="folder-text">🖼️ images/</text>
+  <text x="315" y="184" class="desc-text">(Folder Gambar Produk)</text>
+
+  <!-- Item 4: README.md -->
+  <line x1="80" y1="225" x2="120" y2="225" class="line" />
+  <rect x="120" y="208" width="180" height="32" class="file-box" />
+  <text x="135" y="229" class="file-text">📝 README.md</text>
+  <text x="315" y="229" class="desc-text">(Dokumentasi Repository)</text>
+
+  <!-- Item 5: dokumen/ -->
+  <line x1="80" y1="270" x2="120" y2="270" class="line" />
+  <rect x="120" y="253" width="180" height="32" class="folder-box" />
+  <text x="135" y="274" class="folder-text">📂 dokumen/</text>
+  <text x="315" y="274" class="desc-text">(Folder Tugas Pendukung)</text>
+
+  <!-- Sub-tree Lines for dokumen/ -->
+  <line x1="160" y1="285" x2="160" y2="365" class="line" />
+
+  <!-- Sub Item 1: Arsitektur_Website.md -->
+  <line x1="160" y1="320" x2="190" y2="320" class="line" />
+  <rect x="190" y="305" width="220" height="28" class="file-box" />
+  <text x="205" y="324" class="file-text">📄 Arsitektur_Website.md</text>
+
+  <!-- Sub Item 2: User_Story.md -->
+  <line x1="160" y1="355" x2="190" y2="355" class="line" />
+  <rect x="190" y="340" width="220" height="28" class="file-box" />
+  <text x="205" y="359" class="file-text">📄 User_Story.md</text>
+</svg>
