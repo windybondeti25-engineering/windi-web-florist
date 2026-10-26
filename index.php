@@ -1,13 +1,3 @@
-<?php
-require_once 'koneksi.php';
-
-// Ambil semua produk beserta nama kategorinya
-$stmt = $pdo->query("SELECT p.*, c.name AS category_name 
-                     FROM products p 
-                     LEFT JOIN categories c ON p.category_id = c.id 
-                     ORDER BY p.id DESC");
-$produk_list = $stmt->fetchAll();
-?>
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -41,29 +31,11 @@ $produk_list = $stmt->fetchAll();
         </div>
     </section>
 
-    <!-- Katalog Produk -->
+    <!-- Katalog Produk (Diisi secara dinamis oleh JavaScript via API) -->
     <section id="katalog" class="katalog">
         <h2>Katalog Produk</h2>
-        <div class="produk-grid">
-            <?php if (count($produk_list) > 0): ?>
-                <?php foreach ($produk_list as $produk): ?>
-                    <div class="produk-card">
-                        <img src="<?= htmlspecialchars($produk['image_url'] ?: 'https://images.unsplash.com/photo-1561181286-d3fee7d55364?w=400') ?>" alt="<?= htmlspecialchars($produk['name']) ?>">
-                        <h3><?= htmlspecialchars($produk['name']) ?></h3>
-                        <?php if ($produk['category_name']): ?>
-                            <small style="color: #d63384; font-weight: 600; margin-bottom: 5px;">Category: <?= htmlspecialchars($produk['category_name']) ?></small>
-                        <?php endif; ?>
-                        <p><?= htmlspecialchars($produk['description']) ?></p>
-                        <span class="harga">Rp <?= number_format($produk['price'], 0, ',', '.') ?></span>
-                        <?php 
-                            $wa_text = urlencode("Halo Windi Florist, saya ingin pesan " . $produk['name']);
-                        ?>
-                        <a href="https://wa.me/6285753044724?text=<?= $wa_text ?>" class="btn-sm" target="_blank">Pesan via WA</a>
-                    </div>
-                <?php endforeach; ?>
-            <?php else: ?>
-                <p>Belum ada produk yang tersedia saat ini.</p>
-            <?php endif; ?>
+        <div class="produk-grid" id="produk-container">
+            <p>Memuat data produk dari API...</p>
         </div>
     </section>
 
@@ -97,6 +69,46 @@ $produk_list = $stmt->fetchAll();
     <footer>
         <p>&copy; 2026 Windi Florist - Tugas Pemrograman Web (Windi Bonde - UG54B25006)</p>
     </footer>
+
+    <!-- Script JavaScript untuk memanggil REST API -->
+    <script>
+        async function muatProdukDariAPI() {
+            const container = document.getElementById('produk-container');
+            try {
+                const response = await fetch('api/products.php');
+                const result = await response.json();
+
+                if (response.ok && result.data && result.data.length > 0) {
+                    container.innerHTML = '';
+                    result.data.forEach(produk => {
+                        const hargaFormatted = new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(produk.price);
+                        const waText = encodeURIComponent(`Halo Windi Florist, saya ingin pesan ${produk.name}`);
+                        const imgUrl = produk.image_url || 'https://images.unsplash.com/photo-1561181286-d3fee7d55364?w=400';
+                        const katBadge = produk.category_name ? `<small style="color: #d63384; font-weight: 600; margin-bottom: 5px; display: block;">Category: ${produk.category_name}</small>` : '';
+
+                        const card = `
+                            <div class="produk-card">
+                                <img src="${imgUrl}" alt="${produk.name}">
+                                <h3>${produk.name}</h3>
+                                ${katBadge}
+                                <p>${produk.description || ''}</p>
+                                <span class="harga">${hargaFormatted}</span>
+                                <a href="https://wa.me/6285753044724?text=${waText}" class="btn-sm" target="_blank">Pesan via WA</a>
+                            </div>
+                        `;
+                        container.innerHTML += card;
+                    });
+                } else {
+                    container.innerHTML = '<p>Belum ada produk yang tersedia saat ini.</p>';
+                }
+            } catch (error) {
+                console.error('Gagal mengambil data API:', error);
+                container.innerHTML = '<p style="color: red;">Gagal memuat data produk dari API.</p>';
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', muatProdukDariAPI);
+    </script>
 
 </body>
 </html>
